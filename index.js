@@ -40,6 +40,75 @@ class ListaEncadeada {
 
     return elemento;
   }
+
+  searchAt(posicao) {
+    let atual = this.head;
+    for (let i = 0; i < posicao && atual; i++) {
+      atual = atual.proximo;
+    }
+
+    return atual;
+  }
+
+  insertAt(elemento, posicao) {
+    const novo = new No(elemento);
+    if (posicao == 0) {
+      this.insertFirst(elemento);
+    } else {
+      const anterior = this.searchAt(posicao - 1);
+      const atual = anterior.proximo;
+      novo.proximo = atual;
+      anterior.proximo = novo;
+    }
+
+    return elemento;
+  }
+
+  traversal() {
+    if (!this.head) {
+      return undefined;
+    } else {
+      let atual = this.head;
+      let elementosLista = [];
+      while (atual) {
+        elementosLista.push(atual.elemento);
+        atual = atual.proximo;
+      }
+
+      return elementosLista;
+    }
+  }
+
+  deleteAt(posicao) {
+    let atual = this.head;
+    if (posicao == 0) {
+      this.head = atual.proximo;
+    } else {
+      let anterior = atual;
+      for (let i = 0; i < posicao; i++) {
+        anterior = atual;
+        atual = atual.proximo;
+      }
+      anterior.proximo = atual.proximo;
+    }
+
+    return posicao;
+  }
+
+  indexOf(elemento) {
+    let atual = this.head;
+    let contador = 0;
+    while (atual) {
+      if (atual.elemento == elemento) {
+        return contador;
+        break;
+      } else {
+        atual = atual.proximo;
+        contador++;
+      }
+    }
+    return undefined;
+  }
 }
 
 const trem = new ListaEncadeada();
@@ -47,3 +116,17 @@ const trem = new ListaEncadeada();
 console.log(trem.insertFirst('Locomotiva'));
 console.log(trem.insertLast('Vagão_1'));
 console.log(trem.insertLast('Vagão_2'));
+
+console.log(trem.searchAt(2));
+
+console.log(trem.insertFirst('Vagão de Manobra'));
+
+console.log(trem.insertAt('Novo Vagão', 2));
+console.log(trem.deleteAt(2));
+console.log(trem.deleteAt(0));
+
+console.log(`Posição da Locomotiva: ${trem.indexOf('Locomotiva')}`);
+console.log(`Posição do Vagão 2: ${trem.indexOf('Vagão_2')}`);
+console.log(`Cadê o Thomas?: ${trem.indexOf('Thomas')}`);
+
+console.table(trem.traversal());
