@@ -17,8 +17,9 @@ class ListaEncadeada {
     if (!this.head) {
       this.head = novo;
     } else {
+      atual = this.head;
       novo.proximo = atual;
-      this.head = novo;
+      this.head = novo
     }
 
     return elemento;

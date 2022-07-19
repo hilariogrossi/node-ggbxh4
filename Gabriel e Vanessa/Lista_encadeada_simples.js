@@ -17,6 +17,7 @@ class ListaEncadeada {
     if (!this.head) {
       this.head = novo;
     } else {
+      atual = this.head;
       novo.proximo = atual;
       this.head = novo;
     }
@@ -78,6 +79,37 @@ class ListaEncadeada {
       return elementosLista;
     }
   }
+
+  deleteAt(posicao) {
+    let atual = this.head;
+    if (posicao == 0) {
+      this.head = atual.proximo;
+    } else {
+      let anterior = atual;
+      for (let i = 0; i < posicao; i++) {
+        anterior = atual;
+        atual = atual.proximo;
+      }
+      anterior.proximo = atual.proximo;
+    }
+
+    return posicao;
+  }
+
+  indexOf(elemento) {
+    let atual = this.head;
+    let contador = 0;
+    while (atual) {
+      if (atual.elemento == elemento) {
+        return contador;
+        break;
+      } else {
+        atual = atual.proximo;
+        contador++;
+      }
+    }
+    return undefined;
+  }
 }
 
 const trem = new ListaEncadeada();
@@ -89,5 +121,13 @@ console.log(trem.insertLast('Vagão_2'));
 console.log(trem.searchAt(2));
 
 console.log(trem.insertFirst('Vagão de Manobra'));
+
+console.log(trem.insertAt('Novo Vagão', 2));
+console.log(trem.deleteAt(2));
+console.log(trem.deleteAt(0));
+
+console.log(`Posição da Locomotiva: ${trem.indexOf('Locomotiva')}`);
+console.log(`Posição do Vagão 2: ${trem.indexOf('Vagão_2')}`);
+console.log(`Cadê o Thomas?: ${trem.indexOf('Thomas')}`);
 
 console.table(trem.traversal());
